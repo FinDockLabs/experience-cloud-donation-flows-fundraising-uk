@@ -7,9 +7,9 @@ Donation flow: Screen flow with a multi step donation process, includes setting 
 This template is meant to be customized and extended to fit specific use cases and requirements. For other options, see [Templates for FinDock Payment Experiences](https://github.com/FinDockLabs/experience-cloud-templates). 
 
 *Key features*
-Collect one-time and recurring donations
-Configurable amounts and frequencies
-Collect Gift Aid from UK donors
+- Collect one-time and recurring donations
+- Configurable amounts and frequencies
+- Collect Gift Aid from UK donors
 
 ## Prerequisites
 - FinDock is installed and configured.
@@ -19,7 +19,7 @@ Collect Gift Aid from UK donors
 
 
 ## Installation
-1. Press the buttons to deploy the repo to the org.
+1. Press the button to deploy the repo to the org.
 2. Follow [these instructions](https://help.salesforce.com/s/articleView?id=experience.rss_flow_guestuser.htm&type=5) to set up the guest user access for the flow. Do this for Dontation_Flow.
 3. Go to the donation Flow -> Payment Screen -> Payment Method Selection component
    - configure at least some payment methods
