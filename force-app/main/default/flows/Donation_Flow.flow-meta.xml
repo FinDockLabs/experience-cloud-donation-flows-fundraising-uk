@@ -502,7 +502,7 @@
                     <fieldText>Recipient name</fieldText>
                     <fieldType>InputField</fieldType>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>false</isRequired>
+                    <isRequired>true</isRequired>
                     <styleProperties>
                         <verticalAlignment>
                             <stringValue>top</stringValue>
@@ -536,6 +536,12 @@
                         <name>placeholder</name>
                         <value>
                             <stringValue>recipient@example.com</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>required</name>
+                        <value>
+                            <booleanValue>true</booleanValue>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -696,7 +702,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>GiftAidImage</name>
-                    <fieldText>&lt;p&gt;&lt;img src=&quot;{!$Resource.giftaid}&quot; alt=&quot;Giftaid It&quot;&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;img src=&quot;{!$Resource.giftaid}&quot; alt=&quot;Giftaid It&quot;&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <styleProperties>
                         <verticalAlignment>
@@ -710,7 +716,7 @@
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>6</stringValue>
+                        <stringValue>4</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -721,7 +727,7 @@
                 <inputParameters>
                     <name>width</name>
                     <value>
-                        <stringValue>6</stringValue>
+                        <stringValue>8</stringValue>
                     </value>
                 </inputParameters>
                 <isRequired>false</isRequired>
@@ -755,7 +761,7 @@
         </fields>
         <fields>
             <name>GiftAidDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;em style=&quot;font-size: 11px;&quot;&gt;I am a UK taxpayer and understand that if I pay less Income Tax and/or Capital Gains Tax than the amount of Gift Aid claimed on all my donations in that tax year it is my responsibility to pay any difference.&lt;/em&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;em style=&quot;font-size: 12px;&quot;&gt;I am a UK taxpayer and understand that if I pay less Income Tax and/or Capital Gains Tax than the amount of Gift Aid claimed on all my donations in that tax year it is my responsibility to pay any difference.&lt;/em&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
@@ -775,7 +781,7 @@
             <fieldText>First Name</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -804,7 +810,7 @@
             <fieldText>Last Name</fieldText>
             <fieldType>InputField</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -877,12 +883,9 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>CoverFees</name>
-            <dataType>Boolean</dataType>
-            <fieldText>Cover fees for this donation (+0.50)</fieldText>
-            <fieldType>InputField</fieldType>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
+            <name>DisplayTextFormSpacer</name>
+            <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 8px;&quot;&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -893,9 +896,50 @@
             </styleProperties>
         </fields>
         <fields>
-            <name>CoverFeesDisplayText</name>
-            <fieldText>&lt;p&gt;&lt;em style=&quot;font-size: 12px;&quot;&gt;Add a small amount so 100% of your gift supports the mission.&lt;/em&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <name>Pay_Screen_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Pay_Screen_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>CoverFees</name>
+                    <dataType>Boolean</dataType>
+                    <fieldText>Cover fees for this donation (+0.50)</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <fields>
+                    <name>CoverFeesDisplayText</name>
+                    <fieldText>&lt;p&gt;&lt;em style=&quot;font-size: 12px;&quot;&gt;Add a small amount so 100% of your gift supports the mission.&lt;/em&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <styleProperties>
+                        <verticalAlignment>
+                            <stringValue>top</stringValue>
+                        </verticalAlignment>
+                        <width>
+                            <stringValue>12</stringValue>
+                        </width>
+                    </styleProperties>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>12</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
             <styleProperties>
                 <verticalAlignment>
                     <stringValue>top</stringValue>
@@ -916,7 +960,7 @@
             <inputParameters>
                 <name>pixConfig</name>
                 <value>
-                    <stringValue>{&quot;payer&quot;:{&quot;contactObject&quot;:{&quot;name&quot;:&quot;payerContactVarName&quot;,&quot;value&quot;:&quot;{!Contact_Record}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;}},&quot;paymentMethod&quot;:{&quot;name&quot;:&quot;paymentMethodObjectVar&quot;,&quot;value&quot;:&quot;{!Payment_Method_Selector.context}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;oneTime&quot;:{&quot;valueDataType&quot;:&quot;Object&quot;,&quot;value&quot;:{&quot;amount&quot;:{&quot;name&quot;:&quot;oneTimeAmount&quot;,&quot;value&quot;:&quot;{!FinalAmountOneTime}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;currencyIsoCode&quot;:{&quot;name&quot;:&quot;oneTimeCurrencyVar&quot;,&quot;value&quot;:&quot;GBP&quot;,&quot;valueDataType&quot;:&quot;String&quot;}}},&quot;recurring&quot;:{&quot;valueDataType&quot;:&quot;Object&quot;,&quot;value&quot;:{&quot;recurringSObject&quot;:{&quot;name&quot;:&quot;recurringObjectVar&quot;,&quot;value&quot;:&quot;Recurring_Record&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;amount&quot;:{&quot;name&quot;:&quot;recurringAmount&quot;,&quot;value&quot;:&quot;{!FinalAmountRecurring}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;currencyIsoCode&quot;:{&quot;name&quot;:&quot;recurringCurrencyVar&quot;,&quot;value&quot;:&quot;GBP&quot;,&quot;valueDataType&quot;:&quot;String&quot;},&quot;frequency&quot;:{&quot;name&quot;:&quot;recurringFrequencyVar&quot;,&quot;value&quot;:&quot;{!amountAndFrequency.frequency}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;}}},&quot;giftAidEnabled&quot;:{&quot;name&quot;:&quot;giftAidEnabled&quot;,&quot;value&quot;:&quot;{!GiftAid}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;giftTributeEnabled&quot;:{&quot;name&quot;:&quot;giftTributeEnabled&quot;,&quot;value&quot;:&quot;{!GiftTributeToggle}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;packageActions&quot;:{&quot;giftAidCreate&quot;:{&quot;dateMade&quot;:{&quot;name&quot;:&quot;dateMade&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;startDate&quot;:{&quot;name&quot;:&quot;startDate&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;endDate&quot;:{&quot;name&quot;:&quot;endDate&quot;,&quot;value&quot;:&quot;&quot;,&quot;dataType&quot;:null},&quot;confirmationDate&quot;:{&quot;name&quot;:&quot;confirmationDate&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;firstName&quot;:{&quot;name&quot;:&quot;firstName&quot;,&quot;value&quot;:&quot;{!GiftAidFirstName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;lastName&quot;:{&quot;name&quot;:&quot;lastName&quot;,&quot;value&quot;:&quot;{!GiftAidLastName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;houseNameOrNumber&quot;:{&quot;name&quot;:&quot;houseNameOrNumber&quot;,&quot;value&quot;:&quot;{!GiftAidHouseNameOrNumber}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;postalCode&quot;:{&quot;name&quot;:&quot;postalCode&quot;,&quot;value&quot;:&quot;{!GiftAidPostalCode}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;acquisitionMethod&quot;:{&quot;name&quot;:&quot;acquisitionMethod&quot;,&quot;value&quot;:&quot;digital&quot;,&quot;dataType&quot;:&quot;String&quot;},&quot;overseas&quot;:{&quot;name&quot;:&quot;overseas&quot;,&quot;value&quot;:&quot;{!GiftAidOverseas}&quot;,&quot;dataType&quot;:&quot;reference&quot;}},&quot;giftTribute&quot;:{&quot;type&quot;:{&quot;name&quot;:&quot;type&quot;,&quot;value&quot;:&quot;{!TributeType}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;honoreeName&quot;:{&quot;name&quot;:&quot;honoreeName&quot;,&quot;value&quot;:&quot;{!HonoreeName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;honoreeInformation&quot;:{&quot;name&quot;:&quot;honoreeInformation&quot;,&quot;value&quot;:&quot;&quot;,&quot;dataType&quot;:null},&quot;notificationChannel&quot;:{&quot;name&quot;:&quot;notificationChannel&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationChannel}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationContactName&quot;:{&quot;name&quot;:&quot;notificationContactName&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationEmail&quot;:{&quot;name&quot;:&quot;notificationEmail&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationEmail.value}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationInfo&quot;:{&quot;name&quot;:&quot;notificationInfo&quot;,&quot;value&quot;:&quot;&quot;,&quot;dataType&quot;:null},&quot;notificationMessage&quot;:{&quot;name&quot;:&quot;notificationMessage&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationMessage}&quot;,&quot;dataType&quot;:&quot;reference&quot;}}},&quot;successUrl&quot;:{&quot;name&quot;:&quot;successUrl&quot;,&quot;value&quot;:&quot;https://www.example.com/success&quot;,&quot;valueDataType&quot;:&quot;String&quot;},&quot;failureUrl&quot;:{&quot;name&quot;:&quot;failureUrl&quot;,&quot;value&quot;:&quot;https://www.example.com/failure&quot;,&quot;valueDataType&quot;:&quot;String&quot;}}</stringValue>
+                    <stringValue>{&quot;payer&quot;:{&quot;contactObject&quot;:{&quot;name&quot;:&quot;payerContactVarName&quot;,&quot;value&quot;:&quot;{!Contact_Record}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;}},&quot;paymentMethod&quot;:{&quot;name&quot;:&quot;paymentMethodObjectVar&quot;,&quot;value&quot;:&quot;{!Payment_Method_Selector.context}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;oneTime&quot;:{&quot;valueDataType&quot;:&quot;Object&quot;,&quot;value&quot;:{&quot;amount&quot;:{&quot;name&quot;:&quot;oneTimeAmount&quot;,&quot;value&quot;:&quot;{!FinalAmountOneTime}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;currencyIsoCode&quot;:{&quot;name&quot;:&quot;oneTimeCurrencyVar&quot;,&quot;value&quot;:&quot;GBP&quot;,&quot;valueDataType&quot;:&quot;String&quot;}}},&quot;recurring&quot;:{&quot;valueDataType&quot;:&quot;Object&quot;,&quot;value&quot;:{&quot;amount&quot;:{&quot;name&quot;:&quot;recurringAmount&quot;,&quot;value&quot;:&quot;{!FinalAmountRecurring}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;},&quot;currencyIsoCode&quot;:{&quot;name&quot;:&quot;recurringCurrencyVar&quot;,&quot;value&quot;:&quot;GBP&quot;,&quot;valueDataType&quot;:&quot;String&quot;},&quot;frequency&quot;:{&quot;name&quot;:&quot;recurringFrequencyVar&quot;,&quot;value&quot;:&quot;monthly&quot;,&quot;valueDataType&quot;:&quot;String&quot;},&quot;startDate&quot;:{&quot;name&quot;:&quot;recurringStartDateVar&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;valueDataType&quot;:&quot;reference&quot;}}},&quot;packageActions&quot;:{&quot;giftAidCreate&quot;:{&quot;dateMade&quot;:{&quot;name&quot;:&quot;dateMade&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;startDate&quot;:{&quot;name&quot;:&quot;startDate&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;confirmationDate&quot;:{&quot;name&quot;:&quot;confirmationDate&quot;,&quot;value&quot;:&quot;{!$Flow.CurrentDate}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;firstName&quot;:{&quot;name&quot;:&quot;firstName&quot;,&quot;value&quot;:&quot;{!GiftAidFirstName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;lastName&quot;:{&quot;name&quot;:&quot;lastName&quot;,&quot;value&quot;:&quot;{!GiftAidLastName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;houseNameOrNumber&quot;:{&quot;name&quot;:&quot;houseNameOrNumber&quot;,&quot;value&quot;:&quot;{!GiftAidHouseNameOrNumber}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;postalCode&quot;:{&quot;name&quot;:&quot;postalCode&quot;,&quot;value&quot;:&quot;{!GiftAidPostalCode}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;acquisitionMethod&quot;:{&quot;name&quot;:&quot;acquisitionMethod&quot;,&quot;value&quot;:&quot;digital&quot;,&quot;dataType&quot;:&quot;String&quot;},&quot;overseas&quot;:{&quot;name&quot;:&quot;overseas&quot;,&quot;value&quot;:&quot;{!GiftAidOverseas}&quot;,&quot;dataType&quot;:&quot;reference&quot;}},&quot;giftTribute&quot;:{&quot;type&quot;:{&quot;name&quot;:&quot;type&quot;,&quot;value&quot;:&quot;{!TributeType}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;honoreeName&quot;:{&quot;name&quot;:&quot;honoreeName&quot;,&quot;value&quot;:&quot;{!HonoreeName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationChannel&quot;:{&quot;name&quot;:&quot;notificationChannel&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationChannel}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationContactName&quot;:{&quot;name&quot;:&quot;notificationContactName&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationName}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationEmail&quot;:{&quot;name&quot;:&quot;notificationEmail&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationEmail.value}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;notificationMessage&quot;:{&quot;name&quot;:&quot;notificationMessage&quot;,&quot;value&quot;:&quot;{!GiftTributeNotificationMessage}&quot;,&quot;dataType&quot;:&quot;reference&quot;}}},&quot;giftAidEnabled&quot;:{&quot;name&quot;:&quot;enabled&quot;,&quot;value&quot;:&quot;{!GiftAid}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;giftTributeEnabled&quot;:{&quot;name&quot;:&quot;enabled&quot;,&quot;value&quot;:&quot;{!GiftTributeToggle}&quot;,&quot;dataType&quot;:&quot;reference&quot;},&quot;successUrl&quot;:{&quot;name&quot;:&quot;successUrl&quot;,&quot;value&quot;:&quot;https://www.example.com/success&quot;,&quot;valueDataType&quot;:&quot;String&quot;},&quot;failureUrl&quot;:{&quot;name&quot;:&quot;failureUrl&quot;,&quot;value&quot;:&quot;https://www.example.com/failure&quot;,&quot;valueDataType&quot;:&quot;String&quot;}}</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -970,19 +1014,7 @@
             <inputParameters>
                 <name>frequencyRecurring</name>
                 <value>
-                    <elementReference>amountAndFrequency.frequency</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recurringObject</name>
-                <value>
-                    <elementReference>Recurring_Record</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>giftTributeEnabled</name>
-                <value>
-                    <elementReference>GiftTributeToggle</elementReference>
+                    <stringValue>monthly</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1019,12 +1051,6 @@
                 <name>giftTributeNotificationMessage</name>
                 <value>
                     <elementReference>GiftTributeNotificationMessage</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>giftAidEnabled</name>
-                <value>
-                    <elementReference>GiftAid</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1079,6 +1105,24 @@
                 <name>giftAidOverseas</name>
                 <value>
                     <elementReference>GiftAidOverseas</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>startDateRecurring</name>
+                <value>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>giftAidEnabled</name>
+                <value>
+                    <elementReference>GiftAid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>giftTributeEnabled</name>
+                <value>
+                    <elementReference>GiftTributeToggle</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
