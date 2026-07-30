@@ -7,7 +7,9 @@
     "test": "npm run test:unit",
     "test:unit": "sfdx-lwc-jest",
     "test:unit:watch": "sfdx-lwc-jest --watch",
-    "test:unit:coverage": "sfdx-lwc-jest --coverage"
+    "test:unit:coverage": "sfdx-lwc-jest --coverage",
+    "generate:translations": "node scripts/generate-translation-template.mjs",
+    "generate:flow-translations": "node scripts/generate-flow-translation-template.mjs"
   },
   "devDependencies": {
     "@sa11y/jest": "^8.0.27",
