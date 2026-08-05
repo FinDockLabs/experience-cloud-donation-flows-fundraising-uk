@@ -20,7 +20,7 @@ This template is meant to be customized and extended to fit specific use cases a
 
 ## Installation
 1. Press the button to deploy the repo to the org.
-2. Follow [these instructions](https://help.salesforce.com/s/articleView?id=experience.rss_flow_guestuser.htm&type=5) to set up the guest user access for the flow. Do this for Donation_Flow.
+2. Assign the **FinDockLabs Donation Flow Guest Access** permission set to your Experience Cloud site guest user.
 3. Go to the donation Flow -> Payment Screen -> Payment Method Selection component
    - configure at least one payment method
 4. Configure the [payment intent](https://docs.findock.com/docs/july-26/payments/pay-button) (add at least a success and failure URLs and verify the mapping matches your use case).
