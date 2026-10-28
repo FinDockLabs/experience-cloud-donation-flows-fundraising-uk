@@ -92,7 +92,7 @@ export default class AmountAndFrequency extends LightningElement {
         }
         this._updateRenderedInternalError();
         // Re-emit so the selectedCurrency flow output tracks a currency that changes at runtime
-        // (e.g. bound to the currencyPicker). connectedCallback also emits the initial value.
+        // (e.g. bound to a flow variable). connectedCallback also emits the initial value.
         this._dispatchChange();
     }
 
@@ -145,8 +145,7 @@ export default class AmountAndFrequency extends LightningElement {
     }
 
     // Exposes the active currency as a flow output so downstream steps (e.g. the PaymentIntent)
-    // can read the currency from this component. This keeps the form self-sufficient when the
-    // currencyPicker is removed and the currency is configured directly on this component.
+    // can read the currency from this component, which keeps the form self-sufficient.
     @api
     get selectedCurrency() {
         return this._currencyCode;

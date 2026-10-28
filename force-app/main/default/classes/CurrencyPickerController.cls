@@ -1,6 +1,6 @@
 /**
- * Returns the org's active ISO currency codes for currencyPicker's auto-detect mode
- * (used when the component has no explicit allow-list configured).
+ * Returns the org's active ISO currency codes, used by the amountAndFrequency
+ * property editor (amountAndFrequencyConfig) to list selectable currencies.
  *
  * In a multi-currency org this is every active CurrencyType;
  * in a single-currency org it's just the org's default currency.

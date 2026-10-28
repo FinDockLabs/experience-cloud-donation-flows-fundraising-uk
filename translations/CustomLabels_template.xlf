@@ -18,10 +18,6 @@
             <source>Payment</source>
             <target></target>
         </trans-unit>
-        <trans-unit id="CustomLabel.ec_label_donation_amount_heading" maxwidth="1000" size-unit="char">
-            <source>Select Your Donation Amount</source>
-            <target></target>
-        </trans-unit>
         <trans-unit id="CustomLabel.ec_label_amount_max_error" maxwidth="1000" size-unit="char">
             <source>Maximum amount is {0}</source>
             <target></target>
