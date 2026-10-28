@@ -63,7 +63,8 @@
         <!-- Custom Amount Input Row -->
         <div class="custom-amount-field">
             <label for={customAmountId} class="slds-assistive-text">{labels.ec_label_other_amount}</label>
-            <div class="custom-amount-row">
+            <span id={currencyDescriptionId} class="slds-assistive-text">{currencyAssistiveText}</span>
+            <div class={customAmountRowClass}>
 
                 <template lwc:if={isCurrencyPrefix}>
                     <span class="currency-adornment currency-adornment-prefix" aria-hidden="true">
@@ -72,17 +73,18 @@
                 </template>
 
                 <input
-                    type="number"
+                    type="text"
+                    inputmode="decimal"
+                    autocomplete="transaction-amount"
                     id={customAmountId}
                     class="custom-amount-input-native"
                     placeholder={labels.ec_label_other_amount}
-                    value={_customAmount}
-                    min={customAmountMin}
-                    max={customAmountMax}
-                    step="any"
-                    aria-describedby={customAmountErrorId}
-                    aria-invalid={hasValidationError}
+                    value={customAmountDisplay}
+                    aria-describedby={customAmountDescribedBy}
+                    aria-invalid={isAmountInvalid}
                     oninput={handleCustomAmountInput}
+                    onfocus={handleCustomAmountFocus}
+                    onblur={handleCustomAmountBlur}
                 />
 
                 <template lwc:if={isCurrencySuffix}>
@@ -90,8 +92,6 @@
                         {currencySymbol}
                     </span>
                 </template>
-
-                <span class="currency-code-static" aria-hidden="true">{defaultCurrency}</span>
 
             </div>
 
@@ -101,6 +101,20 @@
                 </p>
             </template>
         </div>
+
+        <!-- Announced on remount by focusing the amount field (aria-describedby), not this region. -->
+        <template lwc:if={hasRequiredError}>
+            <p id={amountRequiredErrorId} role="alert" class="amount-error amount-error--form">
+                {requiredError}
+            </p>
+        </template>
+
+        <!-- Rich text: Flow errors from setCustomValidity() may contain markup. -->
+        <template lwc:if={hasExternalError}>
+            <div id={externalErrorId} role="alert" class="amount-error amount-error--form amount-error--external">
+                <lightning-formatted-rich-text value={externalError}></lightning-formatted-rich-text>
+            </div>
+        </template>
 
     </div>
 </template>
