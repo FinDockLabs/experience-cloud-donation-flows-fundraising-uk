@@ -1,5 +1,7 @@
-import { LightningElement, api, track } from 'lwc';
+import { api, LightningElement, track } from 'lwc';
 import CURRENCY from '@salesforce/i18n/currency';
+import getActiveCurrencies from '@salesforce/apex/CurrencyPickerController.getActiveCurrencies';
+import { ISO_CODE, dedupe, normalizeCurrency, currencyDecimals, currencySymbolInfo, sanitizeAmountInput} from 'c/currencyUtils';
 
 const PRESET_COUNT = 6;
 
@@ -50,25 +52,15 @@ export default class AmountAndFrequencyConfig extends LightningElement {
     @track _presetsOneTime   = makePresets('', DEFAULT_AMOUNTS_ONE_TIME);
     @track _presetsRecurring = makePresets('', DEFAULT_AMOUNTS_RECURRING);
 
+    _previewCurrency = '';
     _showOneTime = true;
     _showMonthly = true;
     _defaultFrequency = 'oneTime';
-    _minAmount = 1;
+    _minAmount = 0;
     _maxAmount = 0;
-    _defaultCurrency = '';
-    _frequencyOpen = true;
-
-    get frequencyOpen() {
-        return this._frequencyOpen;
-    }
-
-    get frequencySectionClass() {
-        return this._frequencyOpen ? 'slds-section slds-is-open' : 'slds-section';
-    }
-
-    get frequencyChevronName() {
-        return this._frequencyOpen ? 'utility:chevrondown' : 'utility:chevronright';
-    }
+    _currencyValue = '';
+    _currencyValueType = 'String';
+    _currencyError = '';
 
     get showOneTime() {
         return this._showOneTime;
@@ -79,7 +71,7 @@ export default class AmountAndFrequencyConfig extends LightningElement {
     }
 
     get minAmount() {
-        return this._minAmount;
+        return this._minAmount === 0 ? '' : this._minAmount;
     }
 
     get maxAmount() {
@@ -123,20 +115,62 @@ export default class AmountAndFrequencyConfig extends LightningElement {
         return max > 0 && min > max ? 'Minimum cannot be greater than maximum.' : '';
     }
 
-    get presetCurrencySymbol() {
-        if (!this._defaultCurrency || this._defaultCurrency.includes('{')) {
-            return '';
-        }
-        return this._getCurrencySymbol(this._defaultCurrency);
+    get currencyValue() {
+        return this._currencyValue;
     }
 
+    get currencyValueType() {
+        return this._currencyValueType;
+    }
+
+    get currencyError() {
+        return this._currencyError;
+    }
+
+    // Currency used to render preview symbols in this editor: the literal ISO code entered here
+    // when available, otherwise the org's active/default currency. A flow-variable reference
+    // resolves only at runtime, so it can't drive the preview and falls back to the org currency.
+    get _previewCurrencyCode() {
+        const val = this._currencyValue;
+        return val && ISO_CODE.test(val) ? val : this._previewCurrency;
+    }
+
+    get presetCurrencySymbol() {
+        return currencySymbolInfo(this._previewCurrencyCode, 'en-US').symbol;
+    }
+
+    get _currencyDecimals() {
+        return currencyDecimals(this._previewCurrencyCode, 'en-US');
+    }
+
+    connectedCallback() {
+        this._loadActiveCurrencies();
+    }
+
+    _loadActiveCurrencies() {
+        getActiveCurrencies()
+            .then((currencies) => {
+                const activeCurrencies = dedupe(
+                    (currencies || []).map((code) => normalizeCurrency(code)).filter(Boolean)
+                );
+                const preferredCurrency = normalizeCurrency(CURRENCY);
+                this._previewCurrency = activeCurrencies.includes(preferredCurrency)
+                    ? preferredCurrency
+                    : activeCurrencies[0] || '';
+            })
+            .catch(() => {
+                this._previewCurrency = '';
+            });
+    }
+
+    _sanitizeConfigAmountInput(event) {
+        const val = sanitizeAmountInput(event.target.value, this._currencyDecimals);
+        event.target.value = val;
+        return val;
+    }
 
     _sanitizePresetAmount(event) {
-        const raw = event.target.value;
-        if (raw === '') return '';
-        const num = Number(raw);
-        if (num < 0) { event.target.value = ''; return ''; }
-        return num;
+        return this._sanitizeConfigAmountInput(event);
     }
 
     _hydrate() {
@@ -158,10 +192,14 @@ export default class AmountAndFrequencyConfig extends LightningElement {
         }
 
         this._defaultFrequency = get('defaultFrequency') ?? 'oneTime';
-        this._minAmount        = get('minAmount')        ?? 1;
+        this._minAmount        = get('minAmount')        ?? 0;
         this._maxAmount        = get('maxAmount')        ?? 0;
-        const rawCurrency = get('defaultCurrency') ?? '';
-        this._defaultCurrency = /^[A-Z]{3}$/.test(rawCurrency) ? rawCurrency : (CURRENCY || '');
+
+        const currencyVar = vars.find(x => x.name === 'currencyCode');
+        if (currencyVar != null) {
+            this._currencyValue     = currencyVar.value ?? '';
+            this._currencyValueType = currencyVar.valueDataType ?? 'String';
+        }
 
         this._presetsOneTime   = makePresets(get('presetAmountsOneTime'),   DEFAULT_AMOUNTS_ONE_TIME);
         this._presetsRecurring = makePresets(get('presetAmountsRecurring'), DEFAULT_AMOUNTS_RECURRING);
@@ -185,28 +223,11 @@ export default class AmountAndFrequencyConfig extends LightningElement {
         this._emit('defaultFrequency', this._defaultFrequency);
     }
 
-    _getCurrencySymbol(code) {
-        if (!code) return '';
-        try {
-            const parts = new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: code, currencyDisplay: 'narrowSymbol', minimumFractionDigits: 0
-            }).formatToParts(0);
-            const sym = parts.find(p => p.type === 'currency');
-            return sym ? sym.value : code;
-        } catch {
-            return code;
-        }
-    }
-
     _emit(name, newValue, newValueDataType = 'String') {
         this.dispatchEvent(new CustomEvent('configuration_editor_input_value_changed', {
             bubbles: true, composed: true,
             detail: { name, newValue, newValueDataType }
         }));
-    }
-
-    handleToggleFrequency() {
-        this._frequencyOpen = !this._frequencyOpen;
     }
 
     handleShowOneTimeChange(event) {
@@ -240,20 +261,47 @@ export default class AmountAndFrequencyConfig extends LightningElement {
         this._emit('presetAmountsRecurring', toAmountString(this._presetsRecurring));
     }
 
+    handleMinAmountInput(event) {
+        this._sanitizeConfigAmountInput(event);
+    }
+
     handleMinAmountChange(event) {
-        const val = parseInt(event.target.value, 10);
-        if (!isNaN(val) && val >= 0) {
-            this._minAmount = val;
-            this._emit('minAmount', val, 'Number');
+        const raw = event.target.value;
+        const parsed = parseFloat(raw);
+        if (!isNaN(parsed) && parsed > 0) {
+            this._minAmount = parsed;
+            this._emit('minAmount', parsed, 'Number');
+        } else if (raw === '') {
+            this._minAmount = 0;
+            this._emit('minAmount', 0, 'Number');
         }
+    }
+
+    handleMaxAmountInput(event) {
+        this._sanitizeConfigAmountInput(event);
     }
 
     handleMaxAmountChange(event) {
         const raw = event.target.value;
-        const val = raw === '' ? 0 : parseInt(raw, 10);
+        const val = raw === '' ? 0 : parseFloat(raw);
         if (!isNaN(val) && val >= 0) {
             this._maxAmount = val;
             this._emit('maxAmount', val, 'Number');
         }
+    }
+
+    handleCurrencyChange(event) {
+        const type = event.detail.newValueDataType ?? 'String';
+        const raw  = event.detail.newValue ?? '';
+        const val  = type === 'String' ? raw.trim().toUpperCase() : raw;
+
+        // Validate literal codes only; a flow-variable reference resolves at runtime.
+        this._currencyError = (type === 'String' && val && !ISO_CODE.test(val))
+            ? `"${val}" is not a valid ISO 4217 currency code.`
+            : '';
+
+        this._currencyValue     = val;
+        this._currencyValueType = type;
+        this._emit('currencyCode', val, type);
     }
 }

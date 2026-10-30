@@ -35,14 +35,6 @@
     </labels>
     <!-- Amount And Frequency -->
     <labels>
-        <fullName>ec_label_donation_amount_heading</fullName>
-        <categories>FinDock Experience Cloud Component</categories>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Donation amount section heading</shortDescription>
-        <value>Select Your Donation Amount</value>
-    </labels>
-    <labels>
         <fullName>ec_label_amount_max_error</fullName>
         <categories>FinDock Experience Cloud Component</categories>
         <language>en_US</language>
